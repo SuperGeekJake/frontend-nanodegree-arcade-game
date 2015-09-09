@@ -1,14 +1,22 @@
-// globals window, ctx, grid
+// globals window, ctx, grid, collision
 
 (function () {
 	var Player = function () {
-	  this.gridX = 3;
-	  this.gridY = 6;
 	  this.sprite = 'images/char-boy.png';
+		this.setStart();
 	};
 
 	Player.prototype.update = function () {
-	  this.render();
+		// if (!collision.test(grid.getX(this.gridX))) {
+			this.render();
+		// } else {
+			// this.setStart();
+		// }
+	};
+
+	Player.prototype.setStart = function () {
+		this.gridX = 3;
+	  this.gridY = 6;
 	};
 
 	Player.prototype.render = function () {
