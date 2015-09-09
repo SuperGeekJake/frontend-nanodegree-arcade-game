@@ -7,11 +7,7 @@
 	};
 
 	Player.prototype.update = function () {
-		// if (!collision.test(grid.getX(this.gridX))) {
-			this.render();
-		// } else {
-			// this.setStart();
-		// }
+		this.render();
 	};
 
 	Player.prototype.setStart = function () {
@@ -21,6 +17,8 @@
 
 	Player.prototype.render = function () {
 	  ctx.drawImage(Resources.get(this.sprite), grid.getX(this.gridX), grid.getY(this.gridY));
+
+		// TODO: run collision test
 	};
 
 	Player.prototype.handleInput = function (inputKey) {

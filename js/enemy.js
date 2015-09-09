@@ -49,6 +49,8 @@
 	// Draw the enemy on the screen, required method for game
 	Enemy.prototype.render = function() {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+		// TODO: run collision test
 	};
 
 	window.Enemy = Enemy;
