@@ -13,8 +13,33 @@
 		max: 200
 	};
 
+	/**
+	 * Get a random integer from a range
+	 * @param  {Integer} min Range minimum (included)
+	 * @param  {Integer} max Range maximum (included)
+	 * @return {Integer}     Ranger integer between given range
+	 */
 	function getRandomInt(min, max) {
 		return Math.floor(Math.random() * ((max + 1) - min)) + min;
+	}
+
+	/**
+	 * Detects whether to Canvas objects have collided
+	 * @param  {Object}  object1 Contains following properties: x, y, width, height
+	 * @param  {Object}  object2 Same as above
+	 * @return {Boolean}         True when a collision has occured
+	 */
+	function hasCollided(object1, object2) {
+		var test1 = (object1.x < object2.x + object2.width);
+		var test2 = (object1.x + object1.width > object2.x);
+		var test3 = (object1.y < object2.y + object2.height);
+		var test4 = (object1.height + object1.y > object2.y);
+
+		if (test1 && test2 && test3 && test4) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// Enemies our player must avoid
