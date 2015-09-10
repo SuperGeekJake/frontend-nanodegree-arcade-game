@@ -17,8 +17,6 @@
 
 	Player.prototype.render = function () {
 	  ctx.drawImage(Resources.get(this.sprite), grid.getX(this.gridX), grid.getY(this.gridY));
-
-		// TODO: run collision test
 	};
 
 	Player.prototype.handleInput = function (inputKey) {
