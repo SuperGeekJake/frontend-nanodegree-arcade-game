@@ -5,7 +5,7 @@
   "main": "src/game.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "BROWSERIFYSHIM_DIAGNOSTICS=1  ./node_modules/.bin/browserify . > js/build.js"
+    "build": "browserify . > js/build.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,12 @@
   "browserify": {
     "transform": [ "browserify-shim" ]
   },
+  "browser": {
+    "jquery": "./bower_components/jquery/dist/jquery.min.js",
+    "createjs": "./bower_components/EaselJS/lib/easeljs-0.8.1.min.js"
+  },
   "browserify-shim": {
-    "./bower_components/EaselJS/lib/easeljs-0.8.1.min.js": "createjs"
+    "jquery": "jQuery",
+    "createjs": "createjs"
   }
 }

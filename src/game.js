@@ -1,3 +1,2 @@
-var createjs = require('createjs');
-
-console.log('test!');
+var engine = require('./engine');
+engine.init();
