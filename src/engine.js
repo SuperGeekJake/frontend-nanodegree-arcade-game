@@ -6,10 +6,17 @@ Tasks:
 var $ = require('jquery');
 var createjs = require('createjs');
 var stage = require('./stage');
-// var player = require('player');
-// var enemy = require('enemy');
+var preload = require('./preload');
+var grid = require('./grid');
+var player = require('./player');
+var Enemy = require('./enemy');
 
-var engine = {};
+var engine = {
+	loading: 0,
+};
+
+// createjs.EventDispatcher.initialize(engine.prototype);
+
 var player, allEnemies;
 // Arrow and WASD keys
 var allowedKeys = {
@@ -23,42 +30,30 @@ var allowedKeys = {
 	87: 'up'
 };
 var enemyNumber = 5;
-var assets = [
-	'images/water-block.png',
-	'images/stone-block.png',
-	'images/grass-block.png'
-];
 
 engine.init = function () {
 	// Preload assets
-	var queue = new createjs.LoadQueue();
-	queue.on('complete', run);
-	queue.loadManifest(assets);
-
-	queue.load();
+	preload.on('complete', run, this);
 };
 
 function run() {
-	// Complete reset
-	// reset();
-
-	// Setup player
-	// player = new Player();
-
-	// Setup enemies
-	// allEnemies = [];
-	// for (var x = 0; x < enemyNumber; x++) {
-	// 	allEnemies.push(new Enemy());
-	// }
-
 	// Update on ticker
-	// createjs.Ticker.addEventListener('ticker', update);
+	createjs.Ticker.addEventListener('tick', update);
 
 	// Handle user input
-	// document.addEventListener('keyup', handleInput);
+	document.addEventListener('keyup', handleInput);
 
 	// Render game
 	render();
+
+	// Setup player
+	player.init();
+
+	// Setup enemies
+	allEnemies = [];
+	for (var x = 0; x < enemyNumber; x++) {
+		allEnemies.push(new Enemy());
+	}
 }
 
 function render() {
@@ -66,12 +61,12 @@ function render() {
 	 * for that particular row of the game level.
 	 */
 	var rowImages = [
-					'images/water-block.png',   // Top row is water
-					'images/stone-block.png',   // Row 1 of 3 of stone
-					'images/stone-block.png',   // Row 2 of 3 of stone
-					'images/stone-block.png',   // Row 3 of 3 of stone
-					'images/grass-block.png',   // Row 1 of 2 of grass
-					'images/grass-block.png'    // Row 2 of 2 of grass
+					'tile-water',   // Top row is water
+					'tile-stone',   // Row 1 of 3 of stone
+					'tile-stone',   // Row 2 of 3 of stone
+					'tile-stone',   // Row 3 of 3 of stone
+					'tile-grass',   // Row 1 of 2 of grass
+					'tile-grass'    // Row 2 of 2 of grass
 			],
 			numRows = 6,
 			numCols = 5,
@@ -91,19 +86,23 @@ function render() {
 					 * we're using them over and over.
 					 */
 					// ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
-					var bgTile = new createjs.Bitmap(rowImages[row]);
-					bgTile.set({x: col*101, y: row*83});
+					var bgTile = new createjs.Bitmap(preload.getResult(rowImages[row]));
+					bgTile.set({x: col*grid.xSize, y: row*grid.ySize});
 					stage.addChild(bgTile);
-					console.log('Tile added')
 			}
 	}
 
-	stage.update();
+	// stage.update();
 }
 
 function update(event) {
-	updateEntities();
-	// checkCollisions();
+
+	if (!event.paused) {
+		updateEntities();
+		stage.update();
+
+		checkCollisions();
+	}
 }
 
 function handleInput(event) {
@@ -117,14 +116,55 @@ function reset() {
 function updateEntities() {
 	// Update enemies
 	allEnemies.forEach(function(enemy) {
-			enemy.update(dt);
+			enemy.update();
 	});
 
 	// Update player
 	player.update();
-
-	// Update stage
-	stage.update();
 }
+
+function handleProgress(event) {
+	// handle preload event - progress
+}
+
+function handleFileLoad(event) {
+	// handle preload event - fileload
+}
+
+function handleLoadComplete(event) {
+	// handle preload event - completion
+	// var completionEvent = new createjs.Event('preload-complete');
+	// engine.dispatchEvent(event);
+
+	run();
+}
+
+function checkCollisions() {
+	allEnemies.forEach(function (enemy) {
+		if (hasCollided(enemy.cc, player.cc)) {
+			player.reset();
+		}
+	});
+}
+
+/**
+	* Detects whether to Canvas objects have collided
+	* @param  {Object}  object1 Contains following properties: x, y, width, height
+	* @param  {Object}  object2 Same as above
+	* @return {Boolean}         True when a collision has occured
+	*/
+function hasCollided(object1, object2) {
+	var test1 = (object1.x < object2.x + object2._bounds.width);
+	var test2 = (object1.x + object1._bounds.width > object2.x);
+	var test3 = (object1.y < object2.y + object2._bounds.height);
+	var test4 = (object1._bounds.height + object1.y > object2.y);
+
+	if (test1 && test2 && test3 && test4) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 module.exports = engine;

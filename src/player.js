@@ -1,59 +1,67 @@
-// globals window, ctx, grid, collision
+var createjs = require('createjs');
+var preload = require('./preload');
+var stage = require('./stage');
+var grid = require('./grid');
 
-(function () {
-	var Player = function () {
-	  this.sprite = 'images/char-boy.png';
-		this.setStart();
-	};
+var player = {};
+player.gridX = 3;
+player.gridY = 6;
 
-	Player.prototype.update = function () {
-		this.render();
-	};
+player.cc = new createjs.Container();
+player.cc.setBounds(0, 0, 101, 83);
 
-	Player.prototype.setStart = function () {
-		this.gridX = 3;
-	  this.gridY = 6;
-	};
+player.init = function () {
+	var playerChar = new createjs.Bitmap(preload.getResult('char-boy'));
+	player.cc.addChild(playerChar);
 
-	Player.prototype.render = function () {
-	  ctx.drawImage(Resources.get(this.sprite), grid.getX(this.gridX), grid.getY(this.gridY));
-	};
+	this.update();
 
-	Player.prototype.handleInput = function (inputKey) {
-	  if (typeof inputKey === 'undefined') return;
+	stage.addChild(player.cc);
+};
 
-	  switch (inputKey) {
-	    case 'up':
-	      if (this.gridY - 1 > 0) {
-	        this.gridY--;
-	        this.update();
-	      }
+player.handleInput = function (inputKey) {
+	if (typeof inputKey === 'undefined') return;
 
-	      break;
+	switch (inputKey) {
+		case 'up':
+			if (this.gridY - 1 > 0) {
+				this.gridY--;
+				this.update();
+			}
 
-	    case 'right':
-	      if (this.gridX + 1 < 6) {
-	        this.gridX++;
-	        this.update();
-	      }
+			break;
 
-	      break;
+		case 'right':
+			if (this.gridX + 1 < 6) {
+				this.gridX++;
+				this.update();
+			}
 
-	    case 'down':
-	      if (this.gridY + 1 < 7) {
-	        this.gridY++;
-	        this.update();
-	      }
+			break;
 
-	      break;
+		case 'down':
+			if (this.gridY + 1 < 7) {
+				this.gridY++;
+				this.update();
+			}
 
-	    case 'left':
-	      if (this.gridX - 1 > 0) {
-	        this.gridX--;
-	        this.update();
-	      }
-	  }
-	};
+			break;
 
-	window.Player = Player;
-})();
+		case 'left':
+			if (this.gridX - 1 > 0) {
+				this.gridX--;
+				this.update();
+			}
+	}
+};
+
+player.reset = function () {
+	this.gridX = 3;
+	this.gridY = 6;
+};
+
+player.update = function () {
+	player.cc.set({x: grid.getX(this.gridX), y: grid.getY(this.gridY)});
+};
+
+module.exports = player;

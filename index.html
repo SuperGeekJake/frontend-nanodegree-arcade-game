@@ -6,16 +6,18 @@
 	<title>Effective JavaScript: Frogger</title>
 	<meta name="description" content="Classic Arcade Frogger Clone Built With HTML5 Canvas">
 
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="assets/css/main.css">
 
   <!-- TODO: Development version -->
-	<script src="js/vendor/modernizr-latest.js"></script>
+	<script src="assets/js/vendor/modernizr-latest.js"></script>
 </head>
 <body>
 	<div class="outdated-browser-alert">
 		I'm sorry, but you're using an older browser that have the following features required to run this game: <span class="feature feature-canvas">canvas</span>
 	</div>
-	<canvas id="stage" width="505" height="606" style="background-color: black;"></canvas>
-	<script src="js/build.js"></script>
+	<canvas id="stage" width="505" height="606"></canvas>
+	<script src="bower_components/EaselJS/lib/easeljs-0.8.1.min.js"></script>
+	<script src="bower_components/PreloadJS/lib/preloadjs-0.6.1.min.js"></script>
+	<script src="assets/js/build.js"></script>
 </body>
 </html>

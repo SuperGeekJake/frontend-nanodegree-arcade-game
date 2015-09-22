@@ -1,19 +1,14 @@
-// globals window
+var grid = {
+	xSize: 101,
+	ySize: 83,
+	yOffset: 25,
+	getX: function (colNum) {
+		return (colNum - 1) * this.xSize;
+	},
 
-(function () {
-	var xSize = 101;
-	var ySize = 83;
+	getY: function (rowNum) {
+		return (rowNum - 1) * this.ySize - this.yOffset;
+	}
+};
 
-	var yOffset = 25;
-
-	var grid = {
-		getX: function (colNum) {
-			return (colNum - 1) * xSize;
-		},
-		getY: function (rowNum) {
-			return (rowNum - 1) * ySize - yOffset;
-		}
-	};
-
-	window.grid = grid;
-})();
+module.exports = grid;
