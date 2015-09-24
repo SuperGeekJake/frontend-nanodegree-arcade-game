@@ -140,6 +140,11 @@ function handleLoadComplete(event) {
 }
 
 function checkCollisions() {
+	if (player.gridY === 1) {
+		player.reset();
+		return;
+	}
+
 	allEnemies.forEach(function (enemy) {
 		if (hasCollided(enemy.cc, player.cc)) {
 			player.reset();
@@ -165,6 +170,5 @@ function hasCollided(object1, object2) {
 		return false;
 	}
 }
-
 
 module.exports = engine;
