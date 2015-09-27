@@ -6,23 +6,34 @@ body {
 	display: none;
 	width: 100%;
 	height: auto;
+	padding: 0.75em 0;
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
-
-	background: #5C0000;
-	color: #fff;
+	background: #7F2121;
+	color: #E4AEAE;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 1em;
 	font-style: normal;
 	font-weight: 700;
 }
 
+.alert a,
+.alert a:visited {
+	color: #fff;
+	text-decoration: none;
+}
+
+.alert a:hover,
+.alert a:active {
+	text-decoration: underline;
+}
+
 .alert__title {
-	font-size: 1.2rem;
+	text-transform: uppercase;
 }
 
 html:not(.canvas) .outdated-browser-alert {
-	display: none;
+	display: block;
 }
