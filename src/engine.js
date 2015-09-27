@@ -1,9 +1,3 @@
-/*
-Tasks:
-- Build canvas
--
- */
-var $ = require('jquery');
 var createjs = require('createjs');
 var stage = require('./stage');
 var preload = require('./preload');
@@ -11,11 +5,12 @@ var grid = require('./grid');
 var player = require('./player');
 var Enemy = require('./enemy');
 
+var maxLives = 3;
+
 var engine = {
 	loading: 0,
+	lives: maxLives
 };
-
-// createjs.EventDispatcher.initialize(engine.prototype);
 
 var player, allEnemies;
 // Arrow and WASD keys

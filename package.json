@@ -30,11 +30,7 @@
       "browserify-shim"
     ]
   },
-  "browser": {
-    "jquery": "./bower_components/jquery/dist/jquery.min.js"
-  },
   "browserify-shim": {
-    "jquery": "jQuery",
     "createjs": "global:createjs"
   }
 }
