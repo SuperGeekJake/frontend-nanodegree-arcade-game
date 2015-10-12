@@ -3,7 +3,9 @@
 A simple frogger clone built with CreateJS (Warning: Must be hosted by a webserver).
 
 **Version:** 1.0.0
+
 **Bugs:** [https://github.com/SuperGeekJake/frontend-nanodegree-arcade-game/issues](https://github.com/SuperGeekJake/frontend-nanodegree-arcade-game/issues)
+
 
 ## Development
 
