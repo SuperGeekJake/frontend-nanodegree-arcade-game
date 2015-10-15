@@ -1,5 +1,9 @@
+html,
 body {
-	text-align: center;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
 }
 
 .alert {
@@ -36,4 +40,16 @@ body {
 
 html:not(.canvas) .outdated-browser-alert {
 	display: block;
+}
+
+.stage-container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+.stage {
+	display: block;
+	width: 100%;
+	height: 100%;
 }

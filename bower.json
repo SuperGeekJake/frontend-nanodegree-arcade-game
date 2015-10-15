@@ -1,0 +1,7 @@
+{
+  "name": "frontend-nanodegree-arcade-game",
+  "dependencies": {
+    "EaselJS": "easeljs#~0.8.1",
+    "PreloadJS": "~0.6.1"
+  }
+}
