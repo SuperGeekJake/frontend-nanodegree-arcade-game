@@ -6,7 +6,7 @@ A simple frogger clone built with CreateJS (Warning: Must be hosted by a webserv
 
 **Bugs:** [https://github.com/SuperGeekJake/frontend-nanodegree-arcade-game/issues](https://github.com/SuperGeekJake/frontend-nanodegree-arcade-game/issues)
 
-### Directions
+## Directions
 
 1.  Clone repo (branch: master) to directory on webserver.
 2.  Go to the corresponding web URL in your browser.
