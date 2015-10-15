@@ -1,13 +1,12 @@
 {
   "name": "frontend-nanodegree-arcade-game",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "FEND Frogger Clone",
   "main": "src/game.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify src/game.js -o assets/js/build.js",
-    "watch": "watchify src/game.js -v -o assets/js/build.js",
-    "serve": "browser-sync start --server --port 3000 & watchify src/game.js -v -o assets/js/build.js"
+    "build": "browserify src/game.js | uglifyjs bower_components/EaselJS/lib/easeljs-0.8.1.min.js bower_components/PreloadJS/lib/preloadjs-0.6.1.min.js - --compress --mangle > assets/js/build.js",
+    "serve": "browser-sync start --server --port 3000"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,7 @@
     "browser-sync": "^2.9.3",
     "browserify": "^11.0.1",
     "browserify-shim": "^3.8.10",
-    "watchify": "^3.4.0"
+    "uglify-js": "^2.5.0"
   },
   "browserify": {
     "transform": [

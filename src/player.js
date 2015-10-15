@@ -4,9 +4,6 @@ var stage = require('./stage');
 var grid = require('./grid');
 
 var player = {};
-player.gridX = 3;
-player.gridY = 6;
-
 player.cc = new createjs.Container();
 player.cc.setBounds(0, 0, 101, 83);
 
@@ -14,7 +11,7 @@ player.init = function () {
 	var playerChar = new createjs.Bitmap(preload.getResult('char-boy'));
 	player.cc.addChild(playerChar);
 
-	this.update();
+	this.reset();
 
 	stage.addChild(player.cc);
 };
@@ -58,6 +55,8 @@ player.handleInput = function (inputKey) {
 player.reset = function () {
 	this.gridX = 3;
 	this.gridY = 6;
+
+	this.update();
 };
 
 player.update = function () {

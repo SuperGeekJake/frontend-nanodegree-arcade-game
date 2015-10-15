@@ -5,16 +5,11 @@ var grid = require('./grid');
 var player = require('./player');
 var Enemy = require('./enemy');
 
-var maxLives = 3;
+var FPS = 30;
+var ENEMY_NUMBER = 5;
 
-var engine = {
-	loading: 0,
-	lives: maxLives
-};
-
-var player, allEnemies;
 // Arrow and WASD keys
-var allowedKeys = {
+var ALLOWED_KEYS = {
 	37: 'left',
 	38: 'up',
 	39: 'right',
@@ -24,7 +19,9 @@ var allowedKeys = {
 	83: 'down',
 	87: 'up'
 };
-var enemyNumber = 5;
+
+var engine = {};
+var player, allEnemies;
 
 engine.init = function () {
 	// Preload assets
@@ -33,25 +30,26 @@ engine.init = function () {
 
 function run() {
 	// Update on ticker
+	createjs.Ticker.framerate = FPS;
 	createjs.Ticker.addEventListener('tick', update);
 
 	// Handle user input
 	document.addEventListener('keyup', handleInput);
 
-	// Render game
-	render();
+	// Render background
+	setupBG();
 
 	// Setup player
 	player.init();
 
 	// Setup enemies
 	allEnemies = [];
-	for (var x = 0; x < enemyNumber; x++) {
+	for (var x = 0; x < ENEMY_NUMBER; x++) {
 		allEnemies.push(new Enemy());
 	}
 }
 
-function render() {
+function setupBG() {
 	/* This array holds the relative URL to the image used
 	 * for that particular row of the game level.
 	 */
@@ -86,57 +84,51 @@ function render() {
 					stage.addChild(bgTile);
 			}
 	}
-
-	// stage.update();
 }
 
+/**
+ * Update game on tick
+ * @param  {[type]} event [description]
+ */
 function update(event) {
 
 	if (!event.paused) {
-		updateEntities();
+		updateEntities(event);
 		stage.update();
 
 		checkCollisions();
 	}
 }
 
+/**
+ * Pass input to player
+ * @param  {Event} event 'keyup' event object
+ */
 function handleInput(event) {
-	player.handleInput(allowedKeys[event.keyCode]);
+	player.handleInput(ALLOWED_KEYS[event.keyCode]);
 }
 
-function reset() {
-	// TODO: Create reset functionality for game restart
-}
-
-function updateEntities() {
+/**
+ * Update bug positions
+ * @param  {[type]} event [description]
+ */
+function updateEntities(event) {
 	// Update enemies
 	allEnemies.forEach(function(enemy) {
-			enemy.update();
+			enemy.update(event);
 	});
-
-	// Update player
-	player.update();
 }
 
-function handleProgress(event) {
-	// handle preload event - progress
-}
-
-function handleFileLoad(event) {
-	// handle preload event - fileload
-}
-
-function handleLoadComplete(event) {
-	// handle preload event - completion
-	// var completionEvent = new createjs.Event('preload-complete');
-	// engine.dispatchEvent(event);
-
-	run();
-}
-
+/**
+ * Check for a collision between the player and a bug
+ */
 function checkCollisions() {
 	if (player.gridY === 1) {
 		player.reset();
+		return;
+	}
+
+	if (player.gridY > 4) {
 		return;
 	}
 
@@ -148,7 +140,7 @@ function checkCollisions() {
 }
 
 /**
-	* Detects whether to Canvas objects have collided
+	* Detects whether two Canvas objects have collided
 	* @param  {Object}  object1 Contains following properties: x, y, width, height
 	* @param  {Object}  object2 Same as above
 	* @return {Boolean}         True when a collision has occured

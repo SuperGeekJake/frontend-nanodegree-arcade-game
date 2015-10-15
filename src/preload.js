@@ -12,8 +12,5 @@ var assets = [
 
 var queue = new createjs.LoadQueue();
 queue.loadManifest(assets);
-// queue.on('progress', handleProgress, this);
-// queue.on('fileload', handleFileLoad, this);
-// queue.on('complete', handleLoadComplete, this);
 
 module.exports = queue;

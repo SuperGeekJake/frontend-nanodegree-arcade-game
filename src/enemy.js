@@ -8,9 +8,10 @@ var enemyRows = {
 	max: 4
 };
 
+// Pixels per second
 var enemySpeed = {
-	min: 3,
-	max: 8
+	min: 100,
+	max: 150
 };
 
 /**
@@ -44,9 +45,9 @@ Enemy.prototype.reset = function () {
 	this.speed = randomSpeed;
 };
 
-Enemy.prototype.update = function () {
+Enemy.prototype.update = function (event) {
 	if (this.cc.x < stage.canvas.width) {
-		this.cc.x = this.cc.x + this.speed;
+		this.cc.x += event.delta / 1000 * this.speed;
 	} else {
 		this.reset();
 	}
